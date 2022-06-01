@@ -1,6 +1,7 @@
 import data.nat.basic
 import data.nat.digits
 
+@[simp]
 def digits_sum (n : ℕ) : ℕ := (nat.digits 10 n).sum
 
 lemma digits_sum_ten_pow_mul {a n : ℕ} :
@@ -24,5 +25,5 @@ begin
       norm_num, }},
   calc digits_sum (2^(2002) * 5^(2003)) = digits_sum(10^(2002) * 5) : by rw h
   ... = digits_sum(5) : by rw digits_sum_ten_pow_mul
-  ... = 5 : by sorry
+  ... = 5 : by simp,
 end
