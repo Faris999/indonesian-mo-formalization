@@ -9,31 +9,25 @@ lemma digits_sum_ten_mul {n : ℕ} :
   digits_sum (10 * n) = digits_sum n :=
 begin
   have h : 0 = n ∨ 0 < n,
-  {
-     apply nat.eq_or_lt_of_le,
-     exact nat.zero_le n,
-  },
+  { apply nat.eq_or_lt_of_le,
+    exact nat.zero_le n, },
   destruct h,
   -- Case 1: n = 0
-  intros h0,
-  rw ←h0,
-  rw nat.mul_zero,
+  { intros h0,
+    rw ← h0,
+    rw nat.mul_zero, },
   -- Case 2: 0 < n
-  intros h0,
-  have h : nat.digits 10 (10 * n) = 0 :: nat.digits 10 n,
-  {
-    calc nat.digits 10 (10 * n) = nat.digits 10 (0 + 10 * n) : by rw (nat.zero_add (10 * n))
-    ... = 0 :: nat.digits 10 n : _,
-    { 
-      rw nat.digits_add,
-      norm_num,
-      norm_num,
-      right, exact h0,
-    }
-  },
-  calc (nat.digits 10 (10 * n)).sum = (0 :: nat.digits 10 n).sum : by rw h
-  ... = 0 + (nat.digits 10 n).sum : by rw list.sum_cons
-  ... = (nat.digits 10 n).sum : by rw nat.zero_add,
+  { intros h0,
+    have h : nat.digits 10 (10 * n) = 0 :: nat.digits 10 n,
+    { calc nat.digits 10 (10 * n) = nat.digits 10 (0 + 10 * n) : by rw (nat.zero_add (10 * n))
+      ... = 0 :: nat.digits 10 n : _,
+      { rw nat.digits_add,
+        norm_num,
+        norm_num,
+        right, exact h0, } },
+    calc (nat.digits 10 (10 * n)).sum = (0 :: nat.digits 10 n).sum : by rw h
+    ... = 0 + (nat.digits 10 n).sum : by rw list.sum_cons
+    ... = (nat.digits 10 n).sum : by rw nat.zero_add, }
 end
 
 -- And then use the previous lemma and induct on a
@@ -42,17 +36,11 @@ lemma digits_sum_ten_pow_mul {a n : ℕ} :
 begin
   induction a,
   simp,
-  have h : 10 ^ a_n.succ * n = 10 * (10 ^ a_n * n),
-  {
-    rw pow_succ,
-    rw mul_assoc,
-  },
-  rw h,
+  rw pow_succ,
+  rw mul_assoc,
   rw digits_sum_ten_mul,
-  exact a_ih,
+  assumption,
 end
-
-
 
 theorem osk2002_13 : digits_sum (2^(2002) * 5^(2003)) = 5 :=
 begin
