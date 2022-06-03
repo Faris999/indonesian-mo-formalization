@@ -30,6 +30,7 @@ begin
 end
 
 -- And then use the previous lemma and induct on a
+-- Lemma name suggestion by Yaël Dillies on the Xena Project Discord
 lemma digits_sum_ten_pow_mul {a n : ℕ} :
   digits_sum (10^a * n) = digits_sum n :=
 begin
