@@ -6,7 +6,7 @@ import tactic
 
 namespace KSNP2021_9
 
-def pos_rat_set : set ℚ := { x | 0 < x }
+def pos_rat_set : set ℚ := set.Ioi 0
 
 def nat_set : set ℚ := { x | 0 < x ∧ coe (rat.floor x) = x } 
 
@@ -36,12 +36,19 @@ begin
   { sorry, },
   have h6 : set.Icc 1 2 ⊆ X,
   { sorry, },
-  have h7 : nat_set ⊆ X,
+  have h7 : set.Ici 1 ⊆ X,
   { sorry, },
-  have h8 : set.Ioc 0 1 ⊆ X,
+  have h8 : nat_set ⊆ X,
   { sorry, },
+  have h9 : set.Ioc 0 1 ⊆ X,
+  { sorry, },
+  have h10 : set.Ioc 0 1 ∪ set.Ici 1 = pos_rat_set,
+  { rw pos_rat_set,
+    rw set.Ioc_union_Ici_eq_Ioi,
+    norm_num, },
   -- Combine all of them
-  sorry,
+  rw ←h10,
+  apply set.union_subset h9 h7,
 end
 
 end KSNP2021_9
